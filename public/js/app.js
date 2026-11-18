@@ -276,7 +276,7 @@ const DETAIL_QUERIES = {
   users: (id) => ({ q: `query($id:ID!){ user(id:$id){
       id name email city country registeredAt orderCount
       orders{ id total status createdAt } reviews{ id rating product{ title } } } }`, v: { id } }),
-  reviews: (id) => ({ q: `query($id:ID!){ reviews(params:{conditions:[{field:"id",op:"eq",value:"${id}"}]}){
+  reviews: (id) => ({ q: `query{ reviews(params:{conditions:[{field:"id",op:"eq",value:"${id}"}]}){
       items{ id rating comment createdAt userId product{ id title category{ name } } userName } } }`, v: {} }),
 };
 
@@ -495,9 +495,9 @@ async function openCreateOrderModal() {
   const options = products.map((p) => `<option value="${p.id}">${esc(truncate(p.title, 50))} — ${money(p.price)}</option>`).join('');
 
   const row = () => `
-    <div class="order-row" style="display:flex;gap:8px;margin-bottom:8px">
-      <select class="oi-product" style="flex:1">${options}</select>
-      <input class="oi-qty" type="number" min="1" value="1" style="width:80px" />
+    <div class="order-row">
+      <select class="oi-product">${options}</select>
+      <input class="oi-qty" type="number" min="1" value="1" />
       <button type="button" class="btn btn-ghost btn-sm oi-remove">✕</button>
     </div>`;
 
